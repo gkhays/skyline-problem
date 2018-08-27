@@ -77,16 +77,18 @@ public class SkylineProblem {
 		}
 		
 		System.out.print("Solution: ");
-		this.print(this.findSkyline(0, building.length - 1));
+		ArrayList<Skyline> skylineList = this.findSkyline(0, building.length - 1);
+		this.print(skylineList);
 		
-		showVisualization(building);
+		showVisualization(building, skylineList);
 	}
 	
-	private void showVisualization(Building[] b) {
+	private void showVisualization(Building[] b, ArrayList<Skyline> skylineList) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				SolutionPane solutionPane = new SolutionPane(Arrays.asList(b));
-				SolutionFrame frame = new SolutionFrame(Arrays.asList(b));
+				// TODO: Eliminate redundant parameters.
+				SolutionPane solutionPane = new SolutionPane(Arrays.asList(b), skylineList);
+				SolutionFrame frame = new SolutionFrame(Arrays.asList(b), skylineList);
 				frame.setTitle("Skyline Solution");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(solutionPane);

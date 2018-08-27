@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import org.poc.algorithm.skyline.SkylineProblem.Skyline;
 
 public class SolutionFrame extends JFrame {
 
@@ -36,13 +38,13 @@ public class SolutionFrame extends JFrame {
 	JPanel contentPane;
 	SolutionPane solutionPane;
 	
-	public SolutionFrame(List<SkylineProblem.Building> buildingList) {
+	public SolutionFrame(List<SkylineProblem.Building> buildingList, ArrayList<Skyline> skylineList) {
 		// TODO: Shouldn't we do all this initialization in the solution panel?
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		solutionPane  = new SolutionPane(buildingList);
+		solutionPane  = new SolutionPane(buildingList, skylineList);
 		contentPane.add(solutionPane, BorderLayout.CENTER);
 
 		JPanel inputPanel = new JPanel();
