@@ -70,8 +70,18 @@ public class SolutionPane extends JPanel {
 		g2.setColor(Color.red);
 		for (Skyline s : skylineList) {
 			int delta = (maxBuildingHeight - s.height) * 10;
-			g2.fillOval(s.coordinates * 10 + lastXr - Math.round(lineWidth), delta + 50 - Math.round(lineWidth), 
-					10, 10);
+			if (s.height == 0) {
+				// Hack for y=0; double the offset for line thickness.
+				g2.fillOval(s.coordinates * 10 + lastXr - Math.round(lineWidth) * 2, 
+						delta + 50 - Math.round(lineWidth) * 2,
+						10,
+						10);
+			} else {
+				g2.fillOval(s.coordinates * 10 + lastXr - Math.round(lineWidth), 
+						delta + 50 - Math.round(lineWidth), 
+						10,
+						10);
+			}
 		}
 	}
 	
