@@ -5,7 +5,8 @@ Uses the solution from the Algorithms - Java project: [SkylineProblem](https://g
 The problem is explained here: [Divide and Conquer | Set 7 (The Skyline Problem)](https://www.geeksforgeeks.org/divide-and-conquer-set-7-the-skyline-problem/). In fact, the demonstration data set comes from the article.
 
 ```json
-{ (1,11,5), 
+{ 
+  (1,11,5), 
   (2,6,7), 
   (3,13,9), 
   (12,7,16), 
