@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
  * @author ghays
  */
 public class SkylineProblem {
-
-	Building[] building;
+	
+	List<Building> buildingList;
 	int count;
 	
 	boolean isDemo;
@@ -45,11 +45,11 @@ public class SkylineProblem {
 	
 	public SkylineProblem(boolean isDemo) {
 		this.isDemo = isDemo;
+		buildingList = new ArrayList<Building>();
 	}
 	
-	public void run() {
+	public void run() {		
 		if (isDemo) {
-			this.building = new Building[8];
 			this.add(1, 11, 5);
 			this.add(2, 6, 7);
 			this.add(3, 13, 9);
@@ -61,34 +61,32 @@ public class SkylineProblem {
 		} else {
 			Scanner sc = new Scanner(System.in);
 
-			System.out.print("Enter the number of buildings: ");
-			int num = sc.nextInt();
-			this.building = new Building[num];
-
-			System.out.println("Now enter the coordinates for each on a separate line.");
-			for (int i = 0; i < num; i++) {
-				String input = sc.next();
+			// By convention, if the operator enters a blank line that signifies his or her
+			// intent to complete the input.
+			System.out.println("Enter the coordinates (triplet) for each building on a separate line.");
+			String input = null;
+			while(!(input = sc.nextLine()).isEmpty()) {
 				String[] data = input.split(",");
 				this.add(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 			}
 			System.out.print("Solution: ");
-			this.print(this.findSkyline(0, num - 1));
+			this.print(this.findSkyline(0, buildingList.size() - 1));
 			sc.close();
 		}
 		
 		System.out.print("Solution: ");
-		ArrayList<Skyline> skylineList = this.findSkyline(0, building.length - 1);
+		ArrayList<Skyline> skylineList = this.findSkyline(0, buildingList.size() - 1);
 		this.print(skylineList);
 		
-		showVisualization(building, skylineList);
+		showVisualization(skylineList);
 	}
 	
-	private void showVisualization(Building[] b, ArrayList<Skyline> skylineList) {
+	private void showVisualization(ArrayList<Skyline> skylineList) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				// TODO: Eliminate redundant parameters.
-				SolutionPane solutionPane = new SolutionPane(Arrays.asList(b), skylineList);
-				SolutionFrame frame = new SolutionFrame(Arrays.asList(b), skylineList);
+				SolutionPane solutionPane = new SolutionPane(buildingList, skylineList);
+				SolutionFrame frame = new SolutionFrame(buildingList, skylineList);
 				frame.setTitle("Skyline Solution");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(solutionPane);
@@ -101,8 +99,9 @@ public class SkylineProblem {
 		});		
 	}
 	
-	public void add(int left, int height, int right) {
-		building[count++] = new Building(left, height, right);
+	private void add(int left, int height, int right) {
+		//building[count++] = new Building(left, height, right);
+		buildingList.add(new Building(left, height, right));
 	}
 	
 	public void print(ArrayList<Skyline> skyline) {
@@ -121,8 +120,8 @@ public class SkylineProblem {
 	public ArrayList<Skyline> findSkyline(int start, int end) {
 		if(start == end) {
 			ArrayList<Skyline> list = new ArrayList<>();
-			list.add(new Skyline(building[start].left, building[start].height));
-			list.add(new Skyline(building[end].right, 0));
+			list.add(new Skyline(buildingList.get(start).left, buildingList.get(start).height));
+			list.add(new Skyline(buildingList.get(end).right, 0));
 			
 			return list;
 		}
